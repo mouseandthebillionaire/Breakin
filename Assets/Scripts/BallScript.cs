@@ -32,7 +32,7 @@ public class BallScript : MonoBehaviour
         hDir = dirOptions[Random.Range(0, dirOptions.Length)];
         
         // Add a horizontal force
-        rb.AddForce(transform.right * ballSpeed * hDir); // Randomly go Left or Right
+        //rb.AddForce(transform.right * ballSpeed * hDir); // Randomly go Left or Right
         // Add a vertical force
         rb.AddForce(transform.up * ballSpeed * -1); // Force it to start going down
     }
@@ -67,8 +67,20 @@ public class BallScript : MonoBehaviour
         
         // did we hit the floor?
         if (other.gameObject.name == "BottomWall") {
+            GameManagerScript.S.DecreaseLives();
             Reset();
         }
+        
+        // did we just hit a brick?!?!?!
+        if (other.gameObject.tag == "brick")
+        {
+            GameManagerScript.S.AddBrick();
+            float scoreValue = other.gameObject.transform.position.y * 100;
+            GameManagerScript.S.Scorer(scoreValue);
+            Destroy(other.gameObject);
+        }
+        
+        
     }
 
     private void SpeedCheck() {
@@ -76,9 +88,6 @@ public class BallScript : MonoBehaviour
         // Prevent ball from going too fast
         if (Mathf.Abs(rb.velocity.x) > maxSpeed) rb.velocity = new Vector2(rb.velocity.x * 0.9f, rb.velocity.y);
         if (Mathf.Abs(rb.velocity.y) > maxSpeed) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.9f);
-
-        if (Mathf.Abs(rb.velocity.x) < minSpeed) rb.velocity = new Vector2(rb.velocity.x * 1.1f, rb.velocity.y);
-        if (Mathf.Abs(rb.velocity.y) < minSpeed) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 1.1f);
 
 
         // Prevent too shallow of an angle
