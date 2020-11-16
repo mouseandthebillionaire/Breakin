@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
-    private float     xPos;
-    public float      speed = .05f;
-    public float      leftWall, rightWall;
+    private float         xPos;
+    public float          speed = .05f;
+    public float          leftWall, rightWall;
+    public KeyCode        fireKey;
+
+    public GameObject    projectile;
 
     // Start is called before the first frame update
     void Start() {
@@ -24,6 +27,10 @@ public class PlayerScript : MonoBehaviour {
             if (xPos < rightWall) {
                 xPos += speed;
             }
+        }
+        
+        if (Input.GetKeyDown(fireKey)){
+            Instantiate(projectile, new Vector2(transform.position.x, transform.position.y + .5f), transform.rotation);
         }
 
         transform.localPosition = new Vector3(xPos, transform.position.y, 0);

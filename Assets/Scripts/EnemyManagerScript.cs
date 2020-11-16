@@ -9,7 +9,7 @@ public class EnemyManagerScript : MonoBehaviour {
     public float xSpacing, ySpacing;
     public float xOrigin, yOrigin;
     public int numRows, numColumns;
-    
+        
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +27,13 @@ public class EnemyManagerScript : MonoBehaviour {
                 
             }
         }
+    }
+
+    void Update() {
+        float speed = 2f;
+        float distance = 0.5f;
+        float offset = Mathf.Sin(Time.time * speed) * distance / 2;
+        transform.position = new Vector3(offset, transform.position.y, 0);
     }
 
 }

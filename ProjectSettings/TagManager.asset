@@ -7,6 +7,10 @@ TagManager:
   - wall
   - paddle
   - brick
+  - enemy
+  - enemyProjectile
+  - player
+  - playerProjectile
   layers:
   - Default
   - TransparentFX
